@@ -66,7 +66,7 @@ const C = {
   line: "#2A4A3E",
 };
 
-const IDLE_VEL = 52;   // deg/sec, the wheel's baseline drift
+const IDLE_VEL = 165;  // deg/sec, the wheel's baseline drift
 const FLIGHT_MS = 470; // how long a dart is in the air
 
 const mono = "'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace";
@@ -216,10 +216,10 @@ export default function Dartboard() {
       if (p === "idle" || p === "flight") {
         // A wandering drift, so the wheel cannot be timed by eye.
         const target =
-          IDLE_VEL + 16 * Math.sin(t * 0.53) + 9 * Math.sin(t * 1.27 + 1.1);
+          IDLE_VEL + 42 * Math.sin(t * 0.53) + 24 * Math.sin(t * 1.27 + 1.1);
         velRef.current += (target - velRef.current) * Math.min(dt * 3, 1);
       } else if (p === "settle") {
-        velRef.current *= Math.exp(-2.4 * dt); // friction
+        velRef.current *= Math.exp(-2.0 * dt); // friction
         if (velRef.current < 5) {
           velRef.current = 0;
           phaseRef.current = "done";
@@ -278,8 +278,8 @@ export default function Dartboard() {
     if (pool.length === 0) return;
     setResult(null);
     setStuck(null);
-    const r = 74 + Math.random() * 66;          // where on the board it bites
-    const jitter = (Math.random() * 2 - 1) * 8; // no one throws dead straight
+    const r = 70 + Math.random() * 72;    // how deep into the board it bites
+    const jitter = Math.random() * 360;   // and anywhere around it
 
     if (reduced) {
       const { stock, local } = resolveAt(jitter);
@@ -292,11 +292,11 @@ export default function Dartboard() {
 
     flightRef.current = {
       t0: performance.now(),
-      x0: 150,
+      x0: -130 + Math.random() * 280, // thrown from a slightly different spot
       y0: 300,
       r,
       jitter,
-      spin0: 200 + Math.random() * 140,
+      spin0: 260 + Math.random() * 220,
     };
     phaseRef.current = "flight";
     setPhase("flight");
@@ -445,7 +445,6 @@ export default function Dartboard() {
                     names left
                   </text>
                 </g>
-                <path d="M 0 -168 L -9 -150 L 9 -150 Z" fill={C.dart} stroke={C.brass} strokeWidth="1" pointerEvents="none" />
 
                 {/* In the air: drawn last so it passes over everything. */}
                 {phase === "flight" && (
