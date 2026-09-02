@@ -7,7 +7,9 @@ well as one the experts pick. This makes that monkey clickable.
 
 ## What it does
 
-- **Throw** — spins a wheel of the 11 GICS sectors and lands on one of 502 names.
+- **Throw** — the wheel of 11 GICS sectors never stops turning. Click whenever you
+  like (the board, the button, or space) and the dart flies, bites the board,
+  rides it around, and the wheel coasts to a stop on one of 502 names.
   Wedge width is each sector's *share of the remaining pool*, not an equal slice,
   so every individual company has the same ~0.20% chance. Equal odds per name,
   not per sector.
